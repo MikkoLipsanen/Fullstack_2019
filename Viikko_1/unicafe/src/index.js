@@ -10,10 +10,12 @@ const Button = ({ handleClick, text }) => (
 )
 
 const App = () => {
-  // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const total = good + neutral + bad
+  const average = (good-bad)/total
+  const positive = 0 + (good/total*100)
 
   const handleSetGood = () => {
     setGood(good + 1)
@@ -27,6 +29,7 @@ const App = () => {
     setBad(bad + 1)
   }
 
+
   return (
     <div>
       <h2>Anna palautetta</h2>
@@ -37,6 +40,9 @@ const App = () => {
       <Display text='hyvä' value={good} />
       <Display text='neutraali' value={neutral} />
       <Display text='huono' value={bad} />
+      <Display text='yhteensä' value={total} />
+      <Display text='keskiarvo' value={average} />
+      <div>positiivisia {positive} %</div>
     </div>
   )
 }
