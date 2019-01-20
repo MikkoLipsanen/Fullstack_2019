@@ -5,15 +5,23 @@ const Statistics = (props) => {
     const { good, neutral, bad } = props
     const total = good + neutral + bad
     const countAverage = () => {
-      if(total===0){
+      if(total === 0){
         return 0
       }
       return (good-bad)/total}
     const countPositive = () => {
-        if(total===0){
+        if(total === 0){
           return 0
         }
         return good/total*100}
+    
+    if(total === 0){
+      return (
+        <div>
+          Ei yhtään palautetta annettu. 
+        </div>
+      )
+    }
 
     return (
       <div>
