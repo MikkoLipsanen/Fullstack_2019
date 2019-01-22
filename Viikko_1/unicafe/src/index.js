@@ -3,30 +3,32 @@ import ReactDOM from 'react-dom'
 
 const Statistic = (props) => {
   return (
-    <div>
-      {props.text} {props.value}
-    </div>
+      <tr>
+        <td>{props.text} {props.value}</td>
+      </tr>
   )
 }
 
 const Statistics = (props) => {
   if(props.stats.total === 0){
     return (
-      <div> 
-        Ei yhtään palautetta annettu.
-      </div>
+      <tbody>
+        <tr> 
+          <td>Ei yhtään palautetta annettu.</td>
+        </tr>
+      </tbody>
     )
   }
 
   return (
-    <div>
+    <tbody>
       <Statistic text='hyvä' value={props.stats.good} />
       <Statistic text='neutraali' value={props.stats.neutral} />
       <Statistic text='huono' value={props.stats.bad} />
       <Statistic text='yhteensä' value={props.stats.total} />
       <Statistic text='keskiarvo' value={props.stats.average} />
       <Statistic text='positiivisia' value={props.stats.positive} />
-    </div>
+    </tbody>
   )
 }
 
@@ -70,7 +72,9 @@ const App = () => {
       <Button handleClick={handleSetNeutral} text="neutraali" />
       <Button handleClick={handleSetBad} text="huono" />
       <h3>Statistiikka</h3>
+    <table>
       <Statistics stats={stats} />
+    </table> 
     </div>
   )
 }
