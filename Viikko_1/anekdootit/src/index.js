@@ -10,31 +10,36 @@ const Button = ({ handleClick, text }) => (
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVote] = useState(new Uint8Array(anecdotes.length))
-
+  const [mostVoted, setMostVoted] = useState(0)
   
   const generateRandomNumber = (min , max) => {
     let random_number = Math.random() * (max-min) + min;
     return Math.floor(random_number);
   }
-  
+
+
   const handleSetSelected = () => {
     setSelected(generateRandomNumber(0,anecdotes.length))
   }
 
   const handleSetVote = () => {
-    console.log(selected)
     const copy = [...votes];
     copy[selected] +=1
-    setVote(copy)
-    
+    if(votes[selected] >= votes[mostVoted]){
+      setMostVoted(selected)
+    }
+    setVote(copy) 
   } 
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <p>{props.anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button handleClick={handleSetVote} text="vote" />
       <Button handleClick={handleSetSelected} text="next anecdote" />
+      <h2>Anecdote with most votes</h2>
+      <p>{props.anecdotes[mostVoted]}</p>
     </div>
   )
 }
