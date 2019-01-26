@@ -3,12 +3,20 @@ import Person from './components/Person'
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '090-98765' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Martti Tienari', number: '040-123456' },
+    { name: 'Arto Järvinen', number: '040-123456' },
+    { name: 'Lea Kutvonen', number: '040-123456' }
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ showLimited, setShowLimited ] = useState('')
 
-  const rows = () => persons.map(person =>
+  const personsToShow = 
+      persons.filter(person => person.name.toLowerCase().includes(showLimited.toLowerCase()))
+  
+
+  const rows = () => personsToShow.map(person =>
     <Person
       key={person.name}
       person={person}
@@ -42,10 +50,21 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleShowLimited = (event) => {
+    setShowLimited(event.target.value)
+  }
+
   return (
     <div>
-      <h2>Puhelinluettelo</h2>
+      <h1>Puhelinluettelo</h1>
       <form onSubmit={addPerson}>
+      <div>rajaa näytettäviä: 
+        <input 
+          value={showLimited} 
+          onChange={handleShowLimited}
+        />
+        </div>
+        <h2>Lisää uusi</h2>
         <div>nimi: 
         <input 
           value={newName} 
