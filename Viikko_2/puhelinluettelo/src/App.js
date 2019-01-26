@@ -3,9 +3,10 @@ import Person from './components/Person'
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '090-98765' }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
 
   const rows = () => persons.map(person =>
     <Person
@@ -20,18 +21,25 @@ const App = () => {
     if(persons.find(person => person.name === newName)){
         window.alert(`${newName} on jo luettelossa`);
         setNewName('')
+        setNewNumber('')
         return;
     }
     const personObject = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
     
     setPersons(persons.concat(personObject))
     setNewName('')
+    setNewNumber('')
   }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
   }
 
   return (
@@ -42,6 +50,12 @@ const App = () => {
         <input 
           value={newName} 
           onChange={handleNameChange}
+        />
+        </div>
+        <div>numero: 
+        <input 
+          value={newNumber} 
+          onChange={handleNumberChange}
         />
         </div>
         <div>
