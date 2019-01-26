@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Person from './components/Person'
 
-const App = (props) => {
+const App = () => {
   const [ persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ]) 
@@ -15,17 +15,22 @@ const App = (props) => {
   )
 
   const addPerson = (event) => {
-      event.preventDefault()
-      const personObject = {
-        name: newName
-      }
-    
-      setPersons(persons.concat(personObject))
-      setNewName('')
+    event.preventDefault()
+
+    if(persons.find(person => person.name === newName)){
+        window.alert(`${newName} on jo luettelossa`);
+        setNewName('')
+        return;
     }
+    const personObject = {
+      name: newName
+    }
+    
+    setPersons(persons.concat(personObject))
+    setNewName('')
+  }
 
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
