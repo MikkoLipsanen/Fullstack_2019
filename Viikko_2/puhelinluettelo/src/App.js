@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import Person from './components/Person'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
+import Persons from './components/Persons'
+
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -14,14 +17,6 @@ const App = () => {
 
   const personsToShow = 
       persons.filter(person => person.name.toLowerCase().includes(showLimited.toLowerCase()))
-  
-
-  const rows = () => personsToShow.map(person =>
-    <Person
-      key={person.name}
-      person={person}
-    />
-  )
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -57,37 +52,14 @@ const App = () => {
   return (
     <div>
       <h1>Puhelinluettelo</h1>
-      <form onSubmit={addPerson}>
-      <div>rajaa näytettäviä: 
-        <input 
-          value={showLimited} 
-          onChange={handleShowLimited}
-        />
-        </div>
-        <h2>Lisää uusi</h2>
-        <div>nimi: 
-        <input 
-          value={newName} 
-          onChange={handleNameChange}
-        />
-        </div>
-        <div>numero: 
-        <input 
-          value={newNumber} 
-          onChange={handleNumberChange}
-        />
-        </div>
-        <div>
-          <button type="submit">lisää</button>
-        </div>
-      </form>
+      <Filter showLimited={showLimited} handleShowLimited={handleShowLimited}/>
+      <h2>Lisää uusi</h2>
+      <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
+      newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numerot</h2>
-      <div>
-        {rows()}
-      </div>
+      <Persons personsToShow={personsToShow}/>
     </div>
   )
-
 }
 
 export default App
