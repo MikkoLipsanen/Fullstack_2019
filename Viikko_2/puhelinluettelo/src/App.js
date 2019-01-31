@@ -46,6 +46,20 @@ const App = () => {
       })  
   }
 
+  const removePerson = id => {
+    const removable = persons.find(person => person.id === id)
+    window.confirm(`Poistetaanko ${removable.name}`);
+    personService
+      .remove(id)
+      .then(response => {
+        console.log(response.data)
+        setPersons(persons.filter(p => p.id !== id))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -66,7 +80,7 @@ const App = () => {
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
       newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numerot</h2>
-      <Persons personsToShow={personsToShow}/>
+      <Persons personsToShow={personsToShow} removePerson={removePerson}/>
     </div>
   )
 }

@@ -4,8 +4,9 @@ import Person from './Person'
 const Persons = (props) =>(
   props.personsToShow.map(person =>
     <Person
-      key={person.name}
+      key={person.id}
       person={person}
+      removePerson={props.removePerson}
     />
   )
 )
