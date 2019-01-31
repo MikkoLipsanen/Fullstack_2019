@@ -37,16 +37,27 @@ const App = () => {
           .update(person.id, changedPerson)
             .then(returnedPerson => {
               setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+            })
+                .catch(error => {
                 setMessage(
-                  `Henkilön '${returnedPerson.name}' numero päivitetty`
+                  `Henkilö '${person.name}' on jo poistettu`
                 )
                 setTimeout(() => {
                   setMessage(null)
                 }, 5000)
-            })
-             setNewName('')
-             setNewNumber('')
-             return;
+                setPersons(persons.filter(p => p.id !== person.id))
+
+                })
+                setMessage(
+                  `Henkilön '${person.name}' numero päivitetty`
+                )
+                setTimeout(() => {
+                  setMessage(null)
+                }, 5000)
+            
+                setNewName('')
+                setNewNumber('')
+                return;
     }
 
     const personObject = {
@@ -105,7 +116,7 @@ const App = () => {
       <h1>Puhelinluettelo</h1>
 
       <Notification message={message} />
-      
+
       <Filter showLimited={showLimited} handleShowLimited={handleShowLimited}/>
       <h2>Lisää uusi</h2>
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
