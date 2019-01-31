@@ -3,6 +3,7 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ showLimited, setShowLimited ] = useState('')
+  const [ message, setMessage ] = useState('')
 
   useEffect(() => {
     personService
@@ -34,11 +36,17 @@ const App = () => {
         personService
           .update(person.id, changedPerson)
             .then(returnedPerson => {
-            setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+              setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+                setMessage(
+                  `Henkilön '${returnedPerson.name}' numero päivitetty`
+                )
+                setTimeout(() => {
+                  setMessage(null)
+                }, 5000)
             })
-        setNewName('')
-        setNewNumber('')
-        return;
+             setNewName('')
+             setNewNumber('')
+             return;
     }
 
     const personObject = {
@@ -50,6 +58,12 @@ const App = () => {
       .create(personObject)
         .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
+        setMessage(
+          `Lisättiin '${returnedPerson.name}'`
+        )
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
         setNewName('')
         setNewNumber('')
       })  
@@ -61,8 +75,13 @@ const App = () => {
     personService
       .remove(id)
       .then(response => {
-        console.log(response.data)
         setPersons(persons.filter(p => p.id !== id))
+        setMessage(
+          `Poistettiin '${removable.name}'`
+        )
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
       .catch((err) => {
         console.log(err)
@@ -84,6 +103,9 @@ const App = () => {
   return (
     <div>
       <h1>Puhelinluettelo</h1>
+
+      <Notification message={message} />
+      
       <Filter showLimited={showLimited} handleShowLimited={handleShowLimited}/>
       <h2>Lisää uusi</h2>
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
