@@ -27,11 +27,20 @@ const App = () => {
     event.preventDefault()
 
     if(persons.find(person => person.name === newName)){
-        window.alert(`${newName} on jo luettelossa`);
+        const person = persons.find(person => person.name === newName)
+        window.alert(`${newName} on jo luettelossa, korvataanko vanha numero uudella?`);
+        const changedPerson = {...person, number: newNumber}
+
+        personService
+          .update(person.id, changedPerson)
+            .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+            })
         setNewName('')
         setNewNumber('')
         return;
     }
+
     const personObject = {
       name: newName,
       number: newNumber
