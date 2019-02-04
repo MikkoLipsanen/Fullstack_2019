@@ -15,17 +15,21 @@ const App = () => {
       })
   }, [])
 
+  const viewCountry = name => {
+    setShowLimited(name)
+  }
+
   const countriesToShow =  
     countries.filter(country => country.name.toLowerCase().includes(showLimited.toLowerCase()))
 
   const handleShowLimited = (event) => {
     setShowLimited(event.target.value)
   }
-
+  
     return (
       <div>
         <Filter showLimited={showLimited} handleShowLimited={handleShowLimited}/>
-        <Countries countriesToShow={countriesToShow} showLimited={showLimited}/>
+        <Countries countriesToShow={countriesToShow} showLimited={showLimited} viewCountry={viewCountry}/>
       </div>
     )
   }

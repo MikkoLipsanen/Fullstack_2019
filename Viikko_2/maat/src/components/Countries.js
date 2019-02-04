@@ -13,7 +13,10 @@ const Countries = (props) => {
   if(props.countriesToShow.length > 1 && props.countriesToShow.length < 10) {
     return (
       props.countriesToShow.map(country =>
-        <div key={country.name}>{country.name}</div>
+        <div 
+          key={country.name}>{country.name}
+          <button onClick={()=>props.viewCountry(country.name)}>show</button>
+        </div>
       )
     )
   }
